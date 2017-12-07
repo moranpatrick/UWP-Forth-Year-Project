@@ -32,8 +32,8 @@ namespace MovieReviewClient
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             HttpClient client = new HttpClient();
-            var JsonResponse = await client.GetStringAsync("http://moviereviewwebapp20171206123555.azurewebsites.net/api/Reviews");
-            //var JsonResponse = await client.GetStringAsync("http://localhost:52985/api/Reviews"); 
+            //var JsonResponse = await client.GetStringAsync("http://moviereviewwebapp20171206123555.azurewebsites.net/api/Reviews");
+            var JsonResponse = await client.GetStringAsync("http://localhost:52985/api/Reviews"); 
 
             var reviewResult = JsonConvert.DeserializeObject<List<Review>>(JsonResponse);
 

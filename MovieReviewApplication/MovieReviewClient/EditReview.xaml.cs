@@ -45,7 +45,9 @@ namespace MovieReviewClient
         private async void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             var client = new HttpClient();
-            await client.DeleteAsync("http://moviereviewwebapp20171206123555.azurewebsites.net/api/Reviews/" + review.id);
+           // await client.DeleteAsync("http://moviereviewwebapp20171206123555.azurewebsites.net/api/Reviews/" + review.id);
+            await client.DeleteAsync("http://localhost:52985/api/Reviews/" + review.id);
+        
             Frame.GoBack();
         }
 
@@ -63,7 +65,8 @@ namespace MovieReviewClient
             var HttpContent = new StringContent(reviewJson);
             HttpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-            await client.PutAsync("http://moviereviewwebapp20171206123555.azurewebsites.net/api/Reviews/" + review.id, HttpContent);
+            //await client.PutAsync("http://moviereviewwebapp20171206123555.azurewebsites.net/api/Reviews/" + review.id, HttpContent);
+            await client.PutAsync("http://localhost:52985/api/Reviews/" + review.id, HttpContent);
 
             Frame.GoBack();
         }
