@@ -45,10 +45,22 @@ namespace MovieReviewClient
             Frame.GoBack();
         }
 
-        private void reviewsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
-            var review = reviewsList.SelectedItem as Review;
-            Frame.Navigate(typeof(EditReviewxaml), review);
+            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Home.IsSelected)
+            {
+                Frame.Navigate(typeof(MainPage));
+            }
+            else if (Add.IsSelected)
+            {
+                Frame.Navigate(typeof(AddReview));
+            }
+        }
+
     }
 }

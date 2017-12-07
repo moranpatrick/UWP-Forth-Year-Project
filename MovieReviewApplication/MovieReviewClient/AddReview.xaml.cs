@@ -49,7 +49,8 @@ namespace MovieReviewClient
             {
                 name = name.Text,
                 movie_title = movie_title.Text,
-                rating = int.Parse(movie_rating.Text),
+                //rating = int.Parse(movie_rating.Text),
+                rating = (int)movie_rating.Value,
                 movie_review = movie_review.Text
             };
             var reviewJson = JsonConvert.SerializeObject(review);
@@ -62,6 +63,24 @@ namespace MovieReviewClient
             await client.PostAsync("http://localhost:52985/api/Reviews", HttpContent);
 
             Frame.Navigate(typeof(ViewReviews));
+        }
+
+        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        {
+            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Home.IsSelected)
+            {
+                Frame.Navigate(typeof(MainPage));
+            }
+            else if (ShowReviews.IsSelected)
+            {
+                Frame.Navigate(typeof(ViewReviews));
+            }
+
         }
     }
 }
