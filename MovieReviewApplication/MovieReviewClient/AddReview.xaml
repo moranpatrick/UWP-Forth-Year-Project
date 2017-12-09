@@ -9,8 +9,8 @@
     
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarButton Icon="Add" Label="Add Review" Click="AppBarButton_Click_1"/>
-            <AppBarButton Icon="Cancel" Label="Cancel" Click="AppBarButton_Click"/>
+            <AppBarButton Icon="Add" FontFamily="Comic Sans MS" Label="Add Review" Click="AppBarButton_Click_1"/>
+            <AppBarButton Icon="Cancel" FontFamily="Comic Sans MS" Label="Cancel" Click="AppBarButton_Click"/>
         </CommandBar>
     </Page.BottomAppBar>
     
@@ -19,6 +19,33 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="NarrowLayout">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="main_title.FontSize" Value="20"/>
+                        <Setter Target="error.FontSize" Value="12"/>
+                        <Setter Target="error.Margin" Value="30,0,0,0"/>
+                        <Setter Target="progressRing.Margin" Value="100,5,0,0"/>
+                        <Setter Target="progressRing.Width" Value="30"/>
+                        <Setter Target="progressRing.Height" Value="30"/>
+                        <Setter Target="TitleTextBlock.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="WideLayout">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="700" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="main_title.FontSize" Value="30"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
         <RelativePanel>
             <Button Name="HamburgerButton" 
@@ -35,45 +62,61 @@
             <TextBlock Name="TitleTextBlock" 
                        RelativePanel.RightOf="HamburgerButton"
                        FontSize="18"
+                       FontFamily="Comic Sans MS"
                        FontWeight="Bold"
-                       Margin="20,0,0,0" />
+                       Margin="20,15,0,0" />
         </RelativePanel>
 
         <SplitView Name="MySplitView" 
                    Grid.Row="1" 
                    DisplayMode="CompactOverlay" 
                    OpenPaneLength="200" 
-                   CompactPaneLength="45" >
+                   CompactPaneLength="45">
             <SplitView.Pane>
                 <ListBox SelectionMode="Single" 
-                         SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-18,0">
+                         SelectionChanged="ListBox_SelectionChanged">
                     <ListBoxItem Name="Home">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock 
-                                Text="&#xE80F;"
+                                Text="&#xE80F;"                                
                                 FontFamily="Segoe MDL2 Assets" 
                                 FontSize="20" />
                             <TextBlock Text="Home" 
                                        FontSize="18" 
+                                       FontFamily="Comic Sans MS"
+                                       Margin="20,0,0,0" />
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem Name="Add">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock 
+                                Text="&#xE70F;"
+                                FontFamily="Segoe MDL2 Assets" 
+                                FontSize="20" />
+                            <TextBlock Text="Add Review" 
+                                       FontSize="18"
+                                       FontFamily="Comic Sans MS"
                                        Margin="20,0,0,0" />
                         </StackPanel>
                     </ListBoxItem>
                     <ListBoxItem Name="ShowReviews">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock 
-                                Text="&#xF168;"
+                                Text="&#xEA37;"
                                 FontFamily="Segoe MDL2 Assets" 
                                 FontSize="20" />
                             <TextBlock Text="Movie Reviews" 
                                        FontSize="18" 
+                                       FontFamily="Comic Sans MS"
                                        Margin="20,0,0,0" />
                         </StackPanel>
                     </ListBoxItem>
                 </ListBox>
             </SplitView.Pane>
             <SplitView.Content>
-                <Grid>
+                <Grid Background="LightGray" Margin="10">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -84,14 +127,16 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <TextBox Grid.Row="0" Grid.ColumnSpan="2" x:Name="name" PlaceholderText="Your Name" Margin="20"/>
-                    <TextBox Grid.Row="1" Grid.ColumnSpan="2" x:Name="movie_title" PlaceholderText="Movie Title" Margin="20,0,20,0"/>
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Rating" Margin="20" Width="Auto"/>
-                    <Slider Grid.Row="2" Grid.Column="1" Width="Auto" Margin="20" x:Name="movie_rating" Maximum="10"></Slider>
-                    <TextBox Grid.Row="3" Grid.ColumnSpan="2" x:Name="movie_review" Height="250" PlaceholderText="Your Review Here" Margin="20,0,20,0"/>
+                    <TextBlock Margin="0,5,0,0" Name="main_title" Grid.Row="0" Grid.ColumnSpan="2" Foreground="Black" FontFamily="Comic Sans MS" Text="WRITE A MOVIE REVIEW" HorizontalAlignment="Center" VerticalAlignment="Top"></TextBlock>
+                    <TextBox Grid.Row="1" Grid.ColumnSpan="2" x:Name="name" FontFamily="Comic Sans MS" PlaceholderText="Your Name" Margin="20" />
+                    <TextBox Grid.Row="2" Grid.ColumnSpan="2" FontFamily="Comic Sans MS" x:Name="movie_title" PlaceholderText="Movie Title" Margin="20,0,20,0"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" FontFamily="Comic Sans MS" Text="Rating" Margin="20" Width="Auto"/>
+                    <Slider Grid.Row="3" Grid.Column="1" FontFamily="Comic Sans MS" Width="Auto" Margin="20" x:Name="movie_rating" Maximum="10"></Slider>
+                    <TextBox Grid.Row="4" Grid.ColumnSpan="2" FontFamily="Comic Sans MS" TextWrapping="Wrap" x:Name="movie_review" Height="250" PlaceholderText="Your Review Here" Margin="20,0,20,0"/>
                 </Grid>
-
             </SplitView.Content>
         </SplitView>
+        <ProgressRing Name="progressRing" Height="50" Width="50" IsActive="False" HorizontalAlignment="Left" Margin="200,5,0,0"/>
+        <TextBlock Name="error" VerticalAlignment="Bottom" Foreground="Red" HorizontalAlignment="Center" Visibility="Collapsed" FontWeight="Bold"></TextBlock>    
     </Grid>
 </Page>

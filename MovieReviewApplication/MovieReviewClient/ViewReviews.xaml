@@ -17,6 +17,34 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="NarrowLayout">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TitleTextBlock.Visibility" Value="Collapsed"/>
+                        <Setter Target="main_title.FontSize" Value="20"/>
+                        <Setter Target="error.FontSize" Value="12"/>
+                        <Setter Target="error.Margin" Value="30,0,0,0"/>
+                        <Setter Target="progressRing.Margin" Value="100,5,0,0"/>
+                        <Setter Target="progressRing.Width" Value="30"/>
+                        <Setter Target="progressRing.Height" Value="30"/>
+                        <Setter Target="TitleTextBlock.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="WideLayout">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="700" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="main_title.FontSize" Value="30"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
         <RelativePanel>
             <Button Name="HamburgerButton" 
                     RelativePanel.AlignLeftWithPanel="True"
@@ -32,8 +60,9 @@
             <TextBlock Name="TitleTextBlock" 
                        RelativePanel.RightOf="HamburgerButton"
                        FontSize="18"
+                       FontFamily="Comic Sans MS"
                        FontWeight="Bold"
-                       Margin="20,0,0,0" />
+                       Margin="20,15,0,0" />
         </RelativePanel>
 
         <SplitView Name="MySplitView" 
@@ -43,15 +72,16 @@
                    CompactPaneLength="45" >
             <SplitView.Pane>
                 <ListBox SelectionMode="Single" 
-                         SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-18,0">
+                         SelectionChanged="ListBox_SelectionChanged">
                     <ListBoxItem Name="Home">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock 
-                                Text="&#xE80F;"
+                                Text="&#xE80F;"                                
                                 FontFamily="Segoe MDL2 Assets" 
                                 FontSize="20" />
                             <TextBlock Text="Home" 
                                        FontSize="18" 
+                                       FontFamily="Comic Sans MS"
                                        Margin="20,0,0,0" />
                         </StackPanel>
                     </ListBoxItem>
@@ -62,7 +92,20 @@
                                 FontFamily="Segoe MDL2 Assets" 
                                 FontSize="20" />
                             <TextBlock Text="Add Review" 
+                                       FontSize="18"
+                                       FontFamily="Comic Sans MS"
+                                       Margin="20,0,0,0" />
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem Name="ShowReviews">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock 
+                                Text="&#xEA37;"
+                                FontFamily="Segoe MDL2 Assets" 
+                                FontSize="20" />
+                            <TextBlock Text="Movie Reviews" 
                                        FontSize="18" 
+                                       FontFamily="Comic Sans MS"
                                        Margin="20,0,0,0" />
                         </StackPanel>
                     </ListBoxItem>
@@ -74,33 +117,63 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="30" FontFamily="Comic Sans MS" Text="USER MOVIE REVIEWS"></TextBlock>
+                    <TextBlock Name="main_title" Grid.Row="0" HorizontalAlignment="Center" FontFamily="Comic Sans MS" Text="USER MOVIE REVIEWS"></TextBlock>
                     <ListBox x:Name="reviewsList" Grid.Row="1" Margin="0,0,0,50">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Grid BorderBrush="BlanchedAlmond">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" FontSize="24" FontFamily="Comic Sans MS" Text="{Binding movie_title}"/>
-                                    <TextBlock Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Comic Sans MS" Text="{Binding rating}"/>
-                                    <TextBlock  Grid.Row="2"  Grid.ColumnSpan="2" FontFamily="Comic Sans MS" Text="{Binding movie_review}"/>
-                                    <TextBlock  Grid.Row="3" Grid.Column="0" FontFamily="Comic Sans MS" Text="Review Author:  "/>
-                                    <TextBlock  Grid.Row="3" Grid.Column="1" FontFamily="Comic Sans MS" Text="{Binding name}"/>
-                                </Grid>
+                                <UserControl>
+                                    <Grid BorderBrush="BlanchedAlmond">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup>
+                                                <VisualState x:Name="NarrowLayout">
+                                                    <VisualState.StateTriggers>
+                                                        <AdaptiveTrigger MinWindowWidth="0" />
+                                                    </VisualState.StateTriggers>
+                                                    <VisualState.Setters>
+                                                        <Setter Target="title.(TextBlock.FontSize)" Value="15" />
+                                                        <Setter Target="rating.(TextBlock.FontSize)" Value="12" />
+                                                        <Setter Target="movie_review.(TextBlock.FontSize)" Value="12" />
+                                                        <Setter Target="author.(TextBlock.FontSize)" Value="12" />
+                                                        <Setter Target="name.(TextBlock.FontSize)" Value="12" />
+                                                        <Setter Target="out_of.(TextBlock.FontSize)" Value="12" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="WideLayout">
+                                                    <VisualState.StateTriggers>
+                                                        <AdaptiveTrigger MinWindowWidth="700" />
+                                                    </VisualState.StateTriggers>
+                                                    <VisualState.Setters>
+                                                        <Setter Target="title.(TextBlock.FontSize)" Value="24" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Name="title" Grid.Row="0" Grid.ColumnSpan="2" FontSize="24" FontFamily="Comic Sans MS" Text="{Binding movie_title}"/>
+                                        <TextBlock Name="rating" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Comic Sans MS" Text="{Binding rating}"/>
+                                        <TextBlock Name="out_of" Text="/10" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Comic Sans MS" Margin="15,0,0,0"></TextBlock>
+                                        <TextBlock Name="movie_review" Grid.Row="2" TextWrapping="Wrap" Grid.ColumnSpan="2" FontFamily="Comic Sans MS" Text="{Binding movie_review}"/>
+                                        <TextBlock Name="author" Grid.Row="3" Grid.Column="0" FontFamily="Comic Sans MS" Text="Review by:  "/>
+                                        <TextBlock Name="name" Grid.Row="3" Grid.Column="1" FontFamily="Comic Sans MS" Text="{Binding name}"/>
+                                    </Grid>
+                                </UserControl>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Grid>
             </SplitView.Content>
         </SplitView>
+        <ProgressRing Name="progressRing" Height="50" Width="50" IsActive="False" HorizontalAlignment="Left" Margin="200,5,0,0"/>
+        <TextBlock Name="error" VerticalAlignment="Bottom" Foreground="Red" HorizontalAlignment="Center" Visibility="Collapsed" FontWeight="Bold"></TextBlock>
     </Grid>
 </Page>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MovieReviewClient
 {
-    class Review
+    class Movie
     {
         public int id { get; set; }
         public string name { get; set; }

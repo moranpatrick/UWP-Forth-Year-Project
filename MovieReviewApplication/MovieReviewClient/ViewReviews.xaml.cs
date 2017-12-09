@@ -14,6 +14,10 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Newtonsoft.Json;
 using System.Net.Http;
+using System.Diagnostics;
+using MovieReviewClient.models;
+using System.Runtime.Serialization.Json;
+using System.Text;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -31,13 +35,27 @@ namespace MovieReviewClient
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
+            TitleTextBlock.Text = "View Reviews";
+            progressRing.IsActive = true;
             HttpClient client = new HttpClient();
-            //var JsonResponse = await client.GetStringAsync("http://moviereviewwebapp20171206123555.azurewebsites.net/api/Reviews");
-            var JsonResponse = await client.GetStringAsync("http://localhost:52985/api/Reviews"); 
 
-            var reviewResult = JsonConvert.DeserializeObject<List<Review>>(JsonResponse);
+            try
+            {
+                var JsonResponse = await client.GetStringAsync("http://moviereviewwebapp20171206123555.azurewebsites.net/api/Reviews");
+                //var JsonResponse = await client.GetStringAsync("http://localhost:52985/api/Reviews");
 
-            reviewsList.ItemsSource = reviewResult;
+                var reviewResult = JsonConvert.DeserializeObject<List<Movie>>(JsonResponse);
+                reviewResult.Reverse();
+                reviewsList.ItemsSource = reviewResult;
+                progressRing.IsActive = false;
+
+            }
+            catch
+            {
+                progressRing.IsActive = false;
+                error.Visibility = Visibility.Visible;
+                error.Text = "Error Retrieving Reviews";
+            }
         }
 
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
@@ -55,12 +73,15 @@ namespace MovieReviewClient
             if (Home.IsSelected)
             {
                 Frame.Navigate(typeof(MainPage));
+                TitleTextBlock.Text = "Home";
             }
             else if (Add.IsSelected)
             {
                 Frame.Navigate(typeof(AddReview));
+                TitleTextBlock.Text = "Create A Review";
             }
         }
 
+ 
     }
 }

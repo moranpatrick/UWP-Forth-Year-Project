@@ -55,12 +55,12 @@ namespace MovieReviewClient
             }
             else if (Add.IsSelected)
             {
-                TitleTextBlock.Text = "Add A Movie Review";
+                
                 Frame.Navigate(typeof(AddReview));
             }
             else if (ShowReviews.IsSelected)
             {
-                TitleTextBlock.Text = "User Reviews";
+                TitleTextBlock.Text = "List of Users Reviews";
                 Frame.Navigate(typeof(ViewReviews));
             }
         }
@@ -81,7 +81,6 @@ namespace MovieReviewClient
             Home.IsSelected = true;
             listMovies.Visibility = Visibility.Visible;
             search_results.Visibility = Visibility.Collapsed;
-
             main_title.Visibility = Visibility.Visible;
             search_title.Visibility = Visibility.Collapsed;
 
@@ -90,30 +89,43 @@ namespace MovieReviewClient
 
         async void load_data()
         {
-            //get a list of top rated movies from the api
-            string url = "https://api.themoviedb.org/3/movie/popular?api_key=497239b3014ce173cabf9cdd23f6b120&language=en-US&page=1";
-            HttpClient client = new HttpClient();
-
-            var response = await client.GetAsync(url);
-            var result = await response.Content.ReadAsStringAsync();
-
-            /* Convert that string into an object graph so I can easily access elements of the json anywhere
-            * DataContractJsonSerializer object used to serialize and deserialize json data*/
-            var serializer = new DataContractJsonSerializer(typeof(RootObject));
-
-            //Memory stream allows data to flow - Json is UTF8
-            var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
-            //Get data out of the serializer
-            var data = (RootObject)serializer.ReadObject(memoryStream);
-
-            var actualresult = data.results;
             
-            foreach (var r in actualresult)
+            progressRing.IsActive = true;
+
+            //get a list of top rated movies from the api
+            string url = "https://api.themoviedb.org/3/movie/top_rated?api_key=497239b3014ce173cabf9cdd23f6b120&language=en-US&page=1";
+            HttpClient client = new HttpClient();
+            try
             {
-                r.poster_path = String.Format("https://image.tmdb.org/t/p/w500{0}", r.poster_path);
+                var response = await client.GetAsync(url);
+                var result = await response.Content.ReadAsStringAsync();
+
+                /* Convert that string into an object graph so I can easily access elements of the json anywhere
+                * DataContractJsonSerializer object used to serialize and deserialize json data*/
+                var serializer = new DataContractJsonSerializer(typeof(RootObject));
+
+                //Memory stream allows data to flow - Json is UTF8
+                var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
+                //Get data out of the serializer
+                var data = (RootObject)serializer.ReadObject(memoryStream);
+
+                var actualresult = data.results;
+
+                foreach (var r in actualresult)
+                {
+                    r.poster_path = String.Format("https://image.tmdb.org/t/p/w500{0}", r.poster_path);
+                }
+
+                listMovies.ItemsSource = actualresult;
+                progressRing.IsActive = false;
             }
-   
-            listMovies.ItemsSource = actualresult; 
+            catch
+            {
+                progressRing.IsActive = false;
+                error.Visibility = Visibility.Visible;
+                MyAutoSuggestBox.Visibility = Visibility.Collapsed;
+                error.Text = "Error Retrieving Movies";           
+            }
         }
 
         //Search Box Event Handler
@@ -127,45 +139,58 @@ namespace MovieReviewClient
             string url = String.Format("https://api.themoviedb.org/3/search/movie?api_key=497239b3014ce173cabf9cdd23f6b120&language=en-US&query={0}", q + "&page=1&include_adult=false");
             
             HttpClient client = new HttpClient();
+            try
+            {
+                var response = await client.GetAsync(url);
+                var result = await response.Content.ReadAsStringAsync();
 
-            var response = await client.GetAsync(url);
-            var result = await response.Content.ReadAsStringAsync();
+                /* Convert that string into an object graph so I can easily access elements of the json anywhere
+                * DataContractJsonSerializer object used to serialize and deserialize json data*/
+                var serializer = new DataContractJsonSerializer(typeof(RootObject));
 
-            /* Convert that string into an object graph so I can easily access elements of the json anywhere
-            * DataContractJsonSerializer object used to serialize and deserialize json data*/
-            var serializer = new DataContractJsonSerializer(typeof(RootObject));
+                //Memory stream allows data to flow - Json is UTF8
+                var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
+                //Get data out of the serializer
+                var data = (RootObject)serializer.ReadObject(memoryStream);
+                if (data.total_results == 0)
+                {
+                    error.Visibility = Visibility.Visible;
+                    error.Text = String.Format("No results - Try Again!");
+                }
+                var actualresult = data.results;
+                if(actualresult == null)
+                {            
+                    error.Visibility = Visibility.Visible;
+                    error.Text = "No results - Try Again!";
+                }
+                else
+                {
+                    foreach (var r in actualresult)
+                    {
+                        r.poster_path = String.Format("https://image.tmdb.org/t/p/w500{0}", r.poster_path);
+                    }
+                    search_results.ItemsSource = actualresult;
+                }
 
-            //Memory stream allows data to flow - Json is UTF8
-            var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
-            //Get data out of the serializer
-            var data = (RootObject)serializer.ReadObject(memoryStream);
 
-            var actualresult = data.results;
-            
-            foreach (var r in actualresult)
-            {             
-                r.poster_path = String.Format("https://image.tmdb.org/t/p/w500{0}", r.poster_path);
+                // Display Search Results Results
+                listMovies.Visibility = Visibility.Collapsed;
+                listMovies.Visibility = Visibility.Collapsed;
+                listMovies.Visibility = Visibility.Collapsed;
+                listMovies.Visibility = Visibility.Collapsed;
+
+                main_title.Visibility = Visibility.Collapsed;
+                search_title.Visibility = Visibility.Visible;
+
+                search_results.Visibility = Visibility.Visible;
             }
-            
-            search_results.ItemsSource = actualresult;
-
-            // Display Search Results Results
-            listMovies.Visibility = Visibility.Collapsed;
-            listMovies.Visibility = Visibility.Collapsed;
-            listMovies.Visibility = Visibility.Collapsed;
-            listMovies.Visibility = Visibility.Collapsed;
-
-            main_title.Visibility = Visibility.Collapsed;
-            search_title.Visibility = Visibility.Visible;
-
-            search_results.Visibility = Visibility.Visible;
+            catch
+            {
+                error.Visibility = Visibility.Visible;
+                error.Text = "Error with Search Query - Please Try again";
+                
+            }
    
-        }
-
-        //Movie Search Suggestions
-        private void MyAutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-        {
-
         }
 
         private void MyAutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -178,7 +203,13 @@ namespace MovieReviewClient
                 }
                 else
                 {
+                    search_results.Visibility = Visibility.Collapsed;
+                    listMovies.Visibility = Visibility.Visible;
+                    main_title.Visibility = Visibility.Visible;
+                    search_title.Visibility = Visibility.Collapsed;
+                    error.Visibility = Visibility.Collapsed;
                     sender.ItemsSource = new string[] { "No Movie Suggestions" };
+
                 }
             }
         }
@@ -188,6 +219,18 @@ namespace MovieReviewClient
             string[] result = null;
             result = suggestions.Where(x => x.Contains(text)).ToArray();
             return result;
+        }
+
+        private void listMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var review = listMovies.SelectedItem as Result;
+            Frame.Navigate(typeof(AddReview), review);
+        }
+
+        private void search_results_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var review = search_results.SelectedItem as Result;
+            Frame.Navigate(typeof(AddReview), review);
         }
     }
     

@@ -27,11 +27,6 @@ namespace MovieReviewClient.models
         public double popularity { get; set; }
         [DataMember]
         public string poster_path { get; set ; }
-        
- 
-
-
-
         [DataMember]
         public string original_language { get; set; }
         [DataMember]

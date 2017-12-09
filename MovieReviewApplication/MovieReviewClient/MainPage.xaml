@@ -14,6 +14,34 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="NarrowLayout">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TitleTextBlock.Visibility" Value="Collapsed"/>
+                        <Setter Target="main_title.FontSize" Value="20"/>
+                        <Setter Target="search_title.FontSize" Value="20"/>
+                        <Setter Target="MyAutoSuggestBox.Width" Value="150"/>
+                        <Setter Target="error.FontSize" Value="12"/>
+                        <Setter Target="error.Margin" Value="55,0,0,10"/>
+                        <Setter Target="progressRing.Margin" Value="80,5,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="WideLayout">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="700" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="main_title.FontSize" Value="30"/>
+                        <Setter Target="search_title.FontSize" Value="30"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
         <RelativePanel>
             <Button Name="HamburgerButton" 
@@ -30,18 +58,20 @@
             <TextBlock Name="TitleTextBlock" 
                        RelativePanel.RightOf="HamburgerButton"
                        FontSize="18"
+                       FontFamily="Comic Sans MS"
                        FontWeight="Bold"
-                       Margin="20,0,0,0" />
+                       Margin="20,15,0,0" />
 
             <AutoSuggestBox Name="MyAutoSuggestBox"
                             QueryIcon="Find" 
-                            PlaceholderText="Search Movies" 
+                            FontFamily="Comic Sans MS"
+                            PlaceholderText="Search Movies"                            
                             RelativePanel.AlignRightWithPanel="True"
                             Width="200"
-                            Margin="0,0,10,0" 
+                            Margin="0,10,10,0" 
                             TextChanged="MyAutoSuggestBox_TextChanged"
                             QuerySubmitted="MyAutoSuggestBox_QuerySubmitted"
-                            SuggestionChosen="MyAutoSuggestBox_SuggestionChosen"/>
+                            />
         </RelativePanel>
 
         <SplitView Name="MySplitView" 
@@ -51,16 +81,17 @@
                    CompactPaneLength="45" 
                    >
             <SplitView.Pane>
-                <ListBox SelectionMode="Single" 
-                         SelectionChanged="ListBox_SelectionChanged" Margin="0,0,-18,0">
+                <ListBox SelectionMode="Single"
+                         SelectionChanged="ListBox_SelectionChanged">
                     <ListBoxItem Name="Home">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock 
-                                Text="&#xE80F;"
+                                Text="&#xE80F;"                                
                                 FontFamily="Segoe MDL2 Assets" 
                                 FontSize="20" />
                             <TextBlock Text="Home" 
                                        FontSize="18" 
+                                       FontFamily="Comic Sans MS"
                                        Margin="20,0,0,0" />
                         </StackPanel>
                     </ListBoxItem>
@@ -71,18 +102,20 @@
                                 FontFamily="Segoe MDL2 Assets" 
                                 FontSize="20" />
                             <TextBlock Text="Add Review" 
-                                       FontSize="18" 
+                                       FontSize="18"
+                                       FontFamily="Comic Sans MS"
                                        Margin="20,0,0,0" />
                         </StackPanel>
                     </ListBoxItem>
                     <ListBoxItem Name="ShowReviews">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock 
-                                Text="&#xF168;"
+                                Text="&#xEA37;"
                                 FontFamily="Segoe MDL2 Assets" 
                                 FontSize="20" />
                             <TextBlock Text="Movie Reviews" 
                                        FontSize="18" 
+                                       FontFamily="Comic Sans MS"
                                        Margin="20,0,0,0" />
                         </StackPanel>
                     </ListBoxItem>
@@ -95,52 +128,111 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Name="main_title" Grid.Row="0" HorizontalAlignment="Center" FontSize="30" FontFamily="Comic Sans MS" Text="TOP-RATED MOVIES"></TextBlock>
-                    <TextBlock Name="search_title" Grid.Row="0" HorizontalAlignment="Center" FontSize="30" FontFamily="Comic Sans MS" Text="SEARCH RESULTS"></TextBlock>
-                    <ListBox x:Name="listMovies" Grid.Row="1">
+                    <TextBlock Name="main_title" Grid.Row="0" HorizontalAlignment="Center"  FontFamily="Comic Sans MS" Text="TOP-RATED MOVIES"></TextBlock>
+                    <TextBlock Name="search_title" Grid.Row="0" HorizontalAlignment="Center" FontFamily="Comic Sans MS" Text="SEARCH RESULTS"></TextBlock>
+                    <ListBox x:Name="listMovies" Grid.Row="1" SelectionChanged="listMovies_SelectionChanged">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Image Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Source="{Binding poster_path}" Width="200" Height="200"></Image>
-                                    <TextBlock Grid.Row="0" Margin="0,150,0,0" Grid.Column="1" Text="{Binding title}" FontFamily="Comic Sans MS" FontSize="20"></TextBlock>
-                                    <TextBlock Grid.Row="1" Margin="0,10,0,0" Grid.Column="1" Text="{Binding overview}" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>
-                                    <TextBlock Grid.Row="2" Margin="0,10,0,0" Grid.Column="1" Text="{Binding vote_average}" FontFamily="Comic Sans MS"></TextBlock>
-                                </Grid>
+                                <UserControl>
+                                    <Grid Name="movie_grid" MaxHeight="500">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup>
+                                                <VisualState x:Name="NarrowLayout">
+                                                    <VisualState.StateTriggers>
+                                                        <AdaptiveTrigger MinWindowWidth="0" />
+                                                    </VisualState.StateTriggers>
+                                                    <VisualState.Setters>
+                                                        <Setter Target="image1.(Image.Width)" Value="100" />
+                                                        <Setter Target="image1.(Image.Height)" Value="100" />
+                                                        <Setter Target="image1.(Image.Margin)" Value="0,35,0,0" />
+                                                        <Setter Target="title1.(TextBlock.FontSize)" Value="15" />
+                                                        <Setter Target="overview1.(TextBlock.FontSize)" Value="12" />
+                                                        <Setter Target="rating1.(TextBlock.FontSize)" Value="12" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="WideLayout">
+                                                    <VisualState.StateTriggers>
+                                                        <AdaptiveTrigger MinWindowWidth="700" />
+                                                    </VisualState.StateTriggers>
+                                                    <VisualState.Setters>
+                                                        <Setter Target="image1.(Image.Width)" Value="200" />
+                                                        <Setter Target="image1.(Image.Height)" Value="200" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Image Name="image1" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Source="{Binding poster_path}"></Image>
+                                        <TextBlock Name="title1" Grid.Row="0" Margin="0,45,0,0" Grid.Column="1" TextWrapping="Wrap" Text="{Binding title}" FontFamily="Comic Sans MS" FontSize="20"></TextBlock>
+                                        <TextBlock Name="overview1" Grid.Row="1" Margin="0,10,0,0" Grid.Column="1" Text="{Binding overview}" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>
+                                        <TextBlock Name="rating1" Grid.Row="2" Margin="0,10,0,0" Grid.Column="1" Text="{Binding vote_average}" FontFamily="Comic Sans MS"></TextBlock>
+                                    </Grid>
+                                </UserControl>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <ListBox Name="search_results" Grid.Row="1">
+                    <ListBox Name="search_results" Grid.Row="1" SelectionChanged="search_results_SelectionChanged">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Image Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Source="{Binding poster_path}" Width="200" Height="200"></Image>
-                                    <TextBlock Grid.Row="0" Margin="0,150,0,0" Grid.Column="1" Text="{Binding title}" FontFamily="Comic Sans MS" FontSize="20"></TextBlock>
-                                    <TextBlock Grid.Row="1" Margin="0,10,0,0" Grid.Column="1" Text="{Binding overview}" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>
-                                    <TextBlock Grid.Row="2" Margin="0,10,0,0" Grid.Column="1" Text="{Binding vote_average}" FontFamily="Comic Sans MS"></TextBlock>
-                                </Grid>
+                                <UserControl>
+                                    <Grid MaxHeight="500">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup>
+                                                <VisualState x:Name="NarrowLayout">
+                                                    <VisualState.StateTriggers>
+                                                        <AdaptiveTrigger MinWindowWidth="0" />
+                                                    </VisualState.StateTriggers>
+                                                    <VisualState.Setters>
+                                                        <Setter Target="image2.(Image.Width)" Value="100" />
+                                                        <Setter Target="image2.(Image.Height)" Value="100" />
+                                                        <Setter Target="image2.(Image.Margin)" Value="0,35,0,0" />
+                                                        <Setter Target="title2.(TextBlock.FontSize)" Value="15" />
+                                                        <Setter Target="overview2.(TextBlock.FontSize)" Value="12" />
+                                                        <Setter Target="rating2.(TextBlock.FontSize)" Value="12" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="WideLayout">
+                                                    <VisualState.StateTriggers>
+                                                        <AdaptiveTrigger MinWindowWidth="700" />
+                                                    </VisualState.StateTriggers>
+                                                    <VisualState.Setters>
+                                                        <Setter Target="image2.(Image.Width)" Value="200" />
+                                                        <Setter Target="image2.(Image.Height)" Value="200" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Image Name="image2" Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Source="{Binding poster_path}" Width="200" Height="200"></Image>
+                                        <TextBlock Name="title2" Grid.Row="0" Margin="0,45,0,0" Grid.Column="1" TextWrapping="Wrap" Text="{Binding title}" FontFamily="Comic Sans MS" FontSize="20"></TextBlock>
+                                        <TextBlock Name="overview2" Grid.Row="1" Margin="0,10,0,0" ScrollViewer.VerticalScrollMode="Auto" Grid.Column="1" Text="{Binding overview}" FontFamily="Comic Sans MS" TextWrapping="Wrap"></TextBlock>
+                                        <TextBlock Name="rating2" Grid.Row="2" Margin="0,10,0,0" Grid.Column="1" Text="{Binding vote_average}" FontFamily="Comic Sans MS"></TextBlock>
+                                    </Grid>
+                                </UserControl>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Grid>
             </SplitView.Content>
         </SplitView>
+        <ProgressRing Name="progressRing" Height="30" Width="30" IsActive="False" HorizontalAlignment="Left" Margin="130,5,0,0" VerticalAlignment="Bottom"/>
+        <TextBlock Name="error"  VerticalAlignment="Bottom" Foreground="Red" HorizontalAlignment="Left" Visibility="Collapsed" FontWeight="Bold"></TextBlock>
     </Grid>
 </Page>
