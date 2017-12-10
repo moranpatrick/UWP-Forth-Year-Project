@@ -26,6 +26,7 @@
                         <Setter Target="main_title.FontSize" Value="20"/>
                         <Setter Target="search_title.FontSize" Value="20"/>
                         <Setter Target="MyAutoSuggestBox.Width" Value="130"/>
+                        <Setter Target="MyAutoSuggestBox.Text" Value="Search"/>
                         <Setter Target="comboBox1.Width" Value="100"/>
                         <Setter Target="error.FontSize" Value="12"/>
                         <Setter Target="error.Margin" Value="55,0,0,10"/>
@@ -77,7 +78,6 @@
                 <x:String>Popular</x:String>
                 <x:String>Upcoming</x:String>
             </ComboBox>
-
 
             <AutoSuggestBox Name="MyAutoSuggestBox"
                             QueryIcon="Find" 
@@ -159,8 +159,8 @@
                                                     </VisualState.StateTriggers>
                                                     <VisualState.Setters>
                                                         <Setter Target="image1.(Image.Width)" Value="100" />
-                                                        <Setter Target="image1.(Image.Height)" Value="100" />
-                                                        <Setter Target="image1.(Image.Margin)" Value="0,35,0,0" />
+                                                        <Setter Target="image1.(Image.Height)" Value="150"/>
+                                                        <Setter Target="image1.(Image.Margin)" Value="5,35,5,0" />
                                                         <Setter Target="title1.(TextBlock.FontSize)" Value="15" />
                                                         <Setter Target="overview1.(TextBlock.FontSize)" Value="12" />
                                                         <Setter Target="rating1.(TextBlock.FontSize)" Value="12" />
@@ -209,8 +209,8 @@
                                                     </VisualState.StateTriggers>
                                                     <VisualState.Setters>
                                                         <Setter Target="image2.(Image.Width)" Value="100" />
-                                                        <Setter Target="image2.(Image.Height)" Value="100" />
-                                                        <Setter Target="image2.(Image.Margin)" Value="0,35,0,0" />
+                                                        <Setter Target="image2.(Image.Height)" Value="150" />
+                                                        <Setter Target="image2.(Image.Margin)" Value="5,35,5,0" />
                                                         <Setter Target="title2.(TextBlock.FontSize)" Value="15" />
                                                         <Setter Target="overview2.(TextBlock.FontSize)" Value="12" />
                                                         <Setter Target="rating2.(TextBlock.FontSize)" Value="12" />

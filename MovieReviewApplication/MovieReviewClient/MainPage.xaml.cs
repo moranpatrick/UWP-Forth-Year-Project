@@ -159,19 +159,18 @@ namespace MovieReviewClient
                 var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
                
                 var data = (RootObject)serializer.ReadObject(memoryStream);
+                var actualresult = data.results;
                 if (data.total_results == 0)
                 {
-                    comboBox1.Visibility = Visibility.Collapsed;
-                    MyAutoSuggestBox.Visibility = Visibility.Collapsed;
-
-                    error.Visibility = Visibility.Visible;
-                    error.Text = String.Format("No results - Try Again!");
+                    load_data(1);
+                    MovieGrid.Visibility = Visibility.Visible;
+                    error.Visibility = Visibility.Visible;              
+                    error.Text = String.Format("No results here - Try Again!");
                 }
-                var actualresult = data.results;
-                if(actualresult == null)
+                else if(actualresult == null)
                 {
-                    comboBox1.Visibility = Visibility.Collapsed;
-                    MyAutoSuggestBox.Visibility = Visibility.Collapsed;
+                    load_data(1);
+                    MovieGrid.Visibility = Visibility.Visible;
                     error.Visibility = Visibility.Visible;
                     error.Text = "No results - Try Again!";
                 }
@@ -182,17 +181,18 @@ namespace MovieReviewClient
                         r.poster_path = String.Format("https://image.tmdb.org/t/p/w500{0}", r.poster_path);
                     }
                     search_results.ItemsSource = actualresult;
+
+                    // Display Search Results Results
+                    listMovies.Visibility = Visibility.Collapsed;
+                    listMovies.Visibility = Visibility.Collapsed;
+                    listMovies.Visibility = Visibility.Collapsed;
+                    listMovies.Visibility = Visibility.Collapsed;
+
+                    main_title.Visibility = Visibility.Collapsed;
+                    search_title.Visibility = Visibility.Visible;
+
+                    search_results.Visibility = Visibility.Visible;
                 }
-                // Display Search Results Results
-                listMovies.Visibility = Visibility.Collapsed;
-                listMovies.Visibility = Visibility.Collapsed;
-                listMovies.Visibility = Visibility.Collapsed;
-                listMovies.Visibility = Visibility.Collapsed;
-
-                main_title.Visibility = Visibility.Collapsed;
-                search_title.Visibility = Visibility.Visible;
-
-                search_results.Visibility = Visibility.Visible;
             }
             catch
             {
@@ -219,7 +219,6 @@ namespace MovieReviewClient
                     search_title.Visibility = Visibility.Collapsed;
                     error.Visibility = Visibility.Collapsed;
                     sender.ItemsSource = new string[] { "No Movie Suggestions" };
-
                 }
             }
         }

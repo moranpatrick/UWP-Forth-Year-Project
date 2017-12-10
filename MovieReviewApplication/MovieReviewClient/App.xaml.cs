@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -63,6 +64,14 @@ namespace MovieReviewClient
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
+
+                // Added back button navigation so the hardware back button on devices like phones and tablets now works!
+                rootFrame.Navigated += (s, ev) =>
+                {
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility
+                    = ((Frame)s).CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+                };
+                SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
             }
 
             if (e.PrelaunchActivated == false)
@@ -76,6 +85,16 @@ namespace MovieReviewClient
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
+            }
+        }
+
+        private void OnBackRequested(object sender, BackRequestedEventArgs e)
+        {
+            Frame rootFrame = (Frame)Window.Current.Content;
+            if (rootFrame.CanGoBack)
+            {
+                e.Handled = true;
+                rootFrame.GoBack();
             }
         }
 

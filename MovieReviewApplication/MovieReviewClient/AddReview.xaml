@@ -10,7 +10,6 @@
     <Page.BottomAppBar>
         <CommandBar>
             <AppBarButton Icon="Add" FontFamily="Comic Sans MS" Label="Add Review" Click="AppBarButton_Click_1"/>
-            <AppBarButton Icon="Cancel" FontFamily="Comic Sans MS" Label="Cancel" Click="AppBarButton_Click"/>
         </CommandBar>
     </Page.BottomAppBar>
     

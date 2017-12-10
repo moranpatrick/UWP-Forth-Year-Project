@@ -118,7 +118,7 @@ namespace MovieReviewClient
 
         private void AppBarButton_Click_1(object sender, RoutedEventArgs e)
         {
-            Frame.GoBack();
+            Frame.Navigate(typeof(AddReview));
         }
     }
 }

@@ -47,12 +47,6 @@ namespace MovieReviewClient
             Frame.Navigate(typeof(ViewReviews));
         }
 
-        //Cancel
-        private void AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.GoBack();
-        }
-
         // Add Review
         private async void AppBarButton_Click_1(object sender, RoutedEventArgs e)
         {
