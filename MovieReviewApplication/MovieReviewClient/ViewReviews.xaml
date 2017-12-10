@@ -8,7 +8,7 @@
     mc:Ignorable="d">
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarButton Icon="Cancel" Label="Cancel" Click="AppBarButton_Click"/>
+            <AppBarButton Icon="Back" Label="Back" Click="AppBarButton_Click_1"/>
         </CommandBar>
     </Page.BottomAppBar>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -218,7 +218,7 @@
                                         <TextBlock Name="author" FontWeight="Bold" Margin="0,0,6,0" Grid.Row="1" Grid.Column="0" FontFamily="Comic Sans MS" Text="Review by:  "/>
                                         <TextBlock Name="name" Grid.Row="1" Grid.Column="1" FontFamily="Comic Sans MS" Text="{Binding author}"/>
                                         <TextBlock Name="url_tag" FontWeight="Bold" Margin="0,0,6,0" Grid.Row="2" Grid.Column="0" FontFamily="Comic Sans MS" Text="Review URL:  "/>
-                                        <TextBlock Name="url" Grid.Row="2" Grid.Column="1" FontFamily="Comic Sans MS" Text="{Binding url}"/>
+                                        <TextBlock Name="url" Grid.Row="2" Grid.Column="1" FontFamily="Comic Sans MS" Text="{Binding url}" TextWrapping="Wrap"/>
                                     </Grid>
                                 </UserControl>
                             </DataTemplate>

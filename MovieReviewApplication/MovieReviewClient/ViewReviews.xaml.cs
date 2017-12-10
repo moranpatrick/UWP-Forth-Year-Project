@@ -83,13 +83,10 @@ namespace MovieReviewClient
                 try
                 {
                     var JsonResponse = await client.GetStringAsync("http://moviereviewwebapp20171206123555.azurewebsites.net/api/Reviews");
-                    //var JsonResponse = await client.GetStringAsync("http://localhost:52985/api/Reviews");
-
                     var reviewResult = JsonConvert.DeserializeObject<List<Review>>(JsonResponse);
                     reviewResult.Reverse();
                     reviewsList.ItemsSource = reviewResult;
                     progressRing.IsActive = false;
-
                 }
                 catch
                 {
@@ -98,11 +95,6 @@ namespace MovieReviewClient
                     error.Text = "Error Retrieving Reviews";
                 }
             }
-        }
-
-        private void AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.GoBack();
         }
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
@@ -124,6 +116,9 @@ namespace MovieReviewClient
             }
         }
 
- 
+        private void AppBarButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            Frame.GoBack();
+        }
     }
 }

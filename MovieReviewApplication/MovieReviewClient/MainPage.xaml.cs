@@ -51,52 +51,41 @@ namespace MovieReviewClient
             if (Home.IsSelected)
             {
                 TitleTextBlock.Text = "Home";
-                load_data();
+                load_data(1);
             }
             else if (Add.IsSelected)
             {
-                
                 Frame.Navigate(typeof(AddReview));
             }
             else if (ShowReviews.IsSelected)
             {
-                TitleTextBlock.Text = "List of Users Reviews";
                 Frame.Navigate(typeof(ViewReviews));
             }
         }
 
-        private void ListBox_SelectionChanged(object sender, RoutedEventArgs e)
+        public async void load_data(int id)
         {
-            listMovies.Visibility = Visibility.Visible;
-            listMovies.Visibility = Visibility.Visible;
-            listMovies.Visibility = Visibility.Visible;
-            listMovies.Visibility = Visibility.Visible;
-
-            search_results.Visibility = Visibility.Collapsed;
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            //When main page is loaded the home listbox item will be shown
-            Home.IsSelected = true;
-            listMovies.Visibility = Visibility.Visible;
-            search_results.Visibility = Visibility.Collapsed;
-            main_title.Visibility = Visibility.Visible;
-            search_title.Visibility = Visibility.Collapsed;
-
-        }
-
-
-        async void load_data()
-        {
-            
-            progressRing.IsActive = true;
-
-            //get a list of top rated movies from the api
-            string url = "https://api.themoviedb.org/3/movie/top_rated?api_key=497239b3014ce173cabf9cdd23f6b120&language=en-US&page=1";
             HttpClient client = new HttpClient();
-            try
+            progressRing.IsActive = true;
+            string url = "https://api.themoviedb.org/3/movie/{0}?api_key=497239b3014ce173cabf9cdd23f6b120&language=en-US&page=1";
+            if (id == 1)
             {
+                main_title.Text = "TOP-RATED MOVIES";
+                url = String.Format(url, "top_rated");
+            }
+            else if (id == 2)
+            {
+                main_title.Text = "POPULAR";
+                url = String.Format(url, "popular");
+            }
+            else if (id == 3)
+            {
+                main_title.Text = "UPCOMING";
+                url = String.Format(url, "upcoming");
+            }
+
+            try
+            {                    
                 var response = await client.GetAsync(url);
                 var result = await response.Content.ReadAsStringAsync();
 
@@ -124,8 +113,30 @@ namespace MovieReviewClient
                 progressRing.IsActive = false;
                 error.Visibility = Visibility.Visible;
                 MyAutoSuggestBox.Visibility = Visibility.Collapsed;
-                error.Text = "Error Retrieving Movies";           
+                comboBox1.Visibility = Visibility.Collapsed;
+                error.Text = "Error Retrieving Movies";
             }
+        }
+
+        private void ListBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            listMovies.Visibility = Visibility.Visible;
+            listMovies.Visibility = Visibility.Visible;
+            listMovies.Visibility = Visibility.Visible;
+            listMovies.Visibility = Visibility.Visible;
+
+            search_results.Visibility = Visibility.Collapsed;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            //When main page is loaded the home listbox item will be shown
+            Home.IsSelected = true;
+            listMovies.Visibility = Visibility.Visible;
+            search_results.Visibility = Visibility.Collapsed;
+            main_title.Visibility = Visibility.Visible;
+            search_title.Visibility = Visibility.Collapsed;
+
         }
 
         //Search Box Event Handler
@@ -143,23 +154,24 @@ namespace MovieReviewClient
             {
                 var response = await client.GetAsync(url);
                 var result = await response.Content.ReadAsStringAsync();
-
-                /* Convert that string into an object graph so I can easily access elements of the json anywhere
-                * DataContractJsonSerializer object used to serialize and deserialize json data*/
                 var serializer = new DataContractJsonSerializer(typeof(RootObject));
 
-                //Memory stream allows data to flow - Json is UTF8
                 var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(result));
-                //Get data out of the serializer
+               
                 var data = (RootObject)serializer.ReadObject(memoryStream);
                 if (data.total_results == 0)
                 {
+                    comboBox1.Visibility = Visibility.Collapsed;
+                    MyAutoSuggestBox.Visibility = Visibility.Collapsed;
+
                     error.Visibility = Visibility.Visible;
                     error.Text = String.Format("No results - Try Again!");
                 }
                 var actualresult = data.results;
                 if(actualresult == null)
-                {            
+                {
+                    comboBox1.Visibility = Visibility.Collapsed;
+                    MyAutoSuggestBox.Visibility = Visibility.Collapsed;
                     error.Visibility = Visibility.Visible;
                     error.Text = "No results - Try Again!";
                 }
@@ -171,8 +183,6 @@ namespace MovieReviewClient
                     }
                     search_results.ItemsSource = actualresult;
                 }
-
-
                 // Display Search Results Results
                 listMovies.Visibility = Visibility.Collapsed;
                 listMovies.Visibility = Visibility.Collapsed;
@@ -235,13 +245,18 @@ namespace MovieReviewClient
 
         private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+         
             if (((ComboBox)sender).SelectedValue.ToString() == "Top Rated")
-            {
-                Debug.WriteLine("Top");
+            {               
+                load_data(1);
             }
             else if(((ComboBox)sender).SelectedValue.ToString() == "Popular")
             {
-                Debug.WriteLine("Pop");
+                load_data(2);
+            }
+            else if(((ComboBox)sender).SelectedValue.ToString() == "Upcoming")
+            {
+                load_data(3);
             }
         }
     }
