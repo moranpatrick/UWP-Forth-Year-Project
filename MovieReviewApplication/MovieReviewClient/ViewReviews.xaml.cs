@@ -39,22 +39,64 @@ namespace MovieReviewClient
             progressRing.IsActive = true;
             HttpClient client = new HttpClient();
 
-            try
+            var review = e.Parameter as Result;
+    
+            if (review != null)
             {
-                var JsonResponse = await client.GetStringAsync("http://moviereviewwebapp20171206123555.azurewebsites.net/api/Reviews");
-                //var JsonResponse = await client.GetStringAsync("http://localhost:52985/api/Reviews");
+                Debug.WriteLine(review.id);
+                string url = String.Format("https://api.themoviedb.org/3/movie/{0}/reviews?api_key=497239b3014ce173cabf9cdd23f6b120&language=en-US&page=1", review.id);
+                Debug.WriteLine(url);
+                try
+                {
+                    Debug.WriteLine("NOT NULL");
+                    var response = await client.GetAsync(url);
+                    var result = await response.Content.ReadAsStringAsync();
 
-                var reviewResult = JsonConvert.DeserializeObject<List<Movie>>(JsonResponse);
-                reviewResult.Reverse();
-                reviewsList.ItemsSource = reviewResult;
-                progressRing.IsActive = false;
+                    ReviewRoot data = JsonConvert.DeserializeObject<ReviewRoot>(result);
+                    if (data.total_results == 0)
+                    {
+                        error.Visibility = Visibility.Visible;
+                        error.Text = "Sorry No Reviews Posted Yet!";
+                    }
+                    else
+                    {
+                        var actualResult = data.results;
 
+                        apiReviewList.ItemsSource = actualResult;
+
+                        review_title.Visibility = Visibility.Visible;
+                        main_title.Visibility = Visibility.Collapsed;
+                        reviewsList.Visibility = Visibility.Collapsed;
+                        apiReviewList.Visibility = Visibility.Visible;
+                    }
+                    progressRing.IsActive = false;
+
+                }
+                catch
+                {
+                    progressRing.IsActive = false;
+                }
             }
-            catch
+            else
             {
-                progressRing.IsActive = false;
-                error.Visibility = Visibility.Visible;
-                error.Text = "Error Retrieving Reviews";
+                Debug.WriteLine("IS NULL");
+                try
+                {
+                    var JsonResponse = await client.GetStringAsync("http://moviereviewwebapp20171206123555.azurewebsites.net/api/Reviews");
+                    //var JsonResponse = await client.GetStringAsync("http://localhost:52985/api/Reviews");
+
+                    var reviewResult = JsonConvert.DeserializeObject<List<Review>>(JsonResponse);
+                    reviewResult.Reverse();
+                    reviewsList.ItemsSource = reviewResult;
+                    progressRing.IsActive = false;
+
+                }
+                catch
+                {
+                    progressRing.IsActive = false;
+                    error.Visibility = Visibility.Visible;
+                    error.Text = "Error Retrieving Reviews";
+                }
             }
         }
 

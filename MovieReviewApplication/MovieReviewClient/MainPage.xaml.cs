@@ -224,13 +224,25 @@ namespace MovieReviewClient
         private void listMovies_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var review = listMovies.SelectedItem as Result;
-            Frame.Navigate(typeof(AddReview), review);
+            Frame.Navigate(typeof(ViewReviews), review);
         }
 
         private void search_results_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var review = search_results.SelectedItem as Result;
-            Frame.Navigate(typeof(AddReview), review);
+            Frame.Navigate(typeof(ViewReviews), review);
+        }
+
+        private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (((ComboBox)sender).SelectedValue.ToString() == "Top Rated")
+            {
+                Debug.WriteLine("Top");
+            }
+            else if(((ComboBox)sender).SelectedValue.ToString() == "Popular")
+            {
+                Debug.WriteLine("Pop");
+            }
         }
     }
     

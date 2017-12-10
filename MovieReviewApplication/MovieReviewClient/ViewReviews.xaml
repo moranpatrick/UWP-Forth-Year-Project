@@ -26,6 +26,8 @@
                     <VisualState.Setters>
                         <Setter Target="TitleTextBlock.Visibility" Value="Collapsed"/>
                         <Setter Target="main_title.FontSize" Value="20"/>
+                        <Setter Target="review_title.FontSize" Value="13"/>
+                        <Setter Target="review_title.Text" Value="Reviews From https://www.themoviedb.org/"/>
                         <Setter Target="error.FontSize" Value="12"/>
                         <Setter Target="error.Margin" Value="30,0,0,0"/>
                         <Setter Target="progressRing.Margin" Value="100,5,0,0"/>
@@ -40,6 +42,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="main_title.FontSize" Value="30"/>
+                        <Setter Target="review_title.FontSize" Value="30"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -118,6 +121,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Name="main_title" Grid.Row="0" HorizontalAlignment="Center" FontFamily="Comic Sans MS" Text="USER MOVIE REVIEWS"></TextBlock>
+                    <TextBlock Name="review_title" Visibility="Collapsed" Grid.Row="0" HorizontalAlignment="Center" FontFamily="Comic Sans MS" Text="REVIEWS PROVIDED FROM https://www.themoviedb.org/"></TextBlock>
                     <ListBox x:Name="reviewsList" Grid.Row="1" Margin="0,0,0,50">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
@@ -163,8 +167,58 @@
                                         <TextBlock Name="rating" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Comic Sans MS" Text="{Binding rating}"/>
                                         <TextBlock Name="out_of" Text="/10" Grid.Row="1" Grid.ColumnSpan="2" FontFamily="Comic Sans MS" Margin="15,0,0,0"></TextBlock>
                                         <TextBlock Name="movie_review" Grid.Row="2" TextWrapping="Wrap" Grid.ColumnSpan="2" FontFamily="Comic Sans MS" Text="{Binding movie_review}"/>
-                                        <TextBlock Name="author" Grid.Row="3" Grid.Column="0" FontFamily="Comic Sans MS" Text="Review by:  "/>
+                                        <TextBlock Name="author" FontWeight="Bold" Margin="0,0,6,0" Grid.Row="3" Grid.Column="0" FontFamily="Comic Sans MS" Text="Review by:"/>
                                         <TextBlock Name="name" Grid.Row="3" Grid.Column="1" FontFamily="Comic Sans MS" Text="{Binding name}"/>
+                                    </Grid>
+                                </UserControl>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <ListBox x:Name="apiReviewList" Visibility="Collapsed" Grid.Row="1" Margin="0,0,0,50">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <UserControl>
+                                    <Grid BorderBrush="BlanchedAlmond">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup>
+                                                <VisualState x:Name="NarrowLayout">
+                                                    <VisualState.StateTriggers>
+                                                        <AdaptiveTrigger MinWindowWidth="0" />
+                                                    </VisualState.StateTriggers>
+                                                    <VisualState.Setters>
+                                                        <Setter Target="movie_review.(TextBlock.FontSize)" Value="11" />
+                                                        <Setter Target="author.(TextBlock.FontSize)" Value="11" />
+                                                        <Setter Target="name.(TextBlock.FontSize)" Value="11" />
+                                                        <Setter Target="url_tag.(TextBlock.FontSize)" Value="11" />
+                                                        <Setter Target="url.(TextBlock.FontSize)" Value="11" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="WideLayout">
+                                                    <VisualState.StateTriggers>
+                                                        <AdaptiveTrigger MinWindowWidth="700" />
+                                                    </VisualState.StateTriggers>
+                                                    <VisualState.Setters>
+                                                        
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Name="movie_review" Grid.Row="0" TextWrapping="Wrap" Grid.ColumnSpan="2" FontFamily="Comic Sans MS" Text="{Binding content}"/>
+                                        <TextBlock Name="author" FontWeight="Bold" Margin="0,0,6,0" Grid.Row="1" Grid.Column="0" FontFamily="Comic Sans MS" Text="Review by:  "/>
+                                        <TextBlock Name="name" Grid.Row="1" Grid.Column="1" FontFamily="Comic Sans MS" Text="{Binding author}"/>
+                                        <TextBlock Name="url_tag" FontWeight="Bold" Margin="0,0,6,0" Grid.Row="2" Grid.Column="0" FontFamily="Comic Sans MS" Text="Review URL:  "/>
+                                        <TextBlock Name="url" Grid.Row="2" Grid.Column="1" FontFamily="Comic Sans MS" Text="{Binding url}"/>
                                     </Grid>
                                 </UserControl>
                             </DataTemplate>

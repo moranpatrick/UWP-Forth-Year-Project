@@ -41,11 +41,20 @@ namespace MovieReviewClient.models
         public string overview { get; set; }
         [DataMember]
         public string release_date { get; set; }
+
+        [DataMember]
+        public string author { get; set; }
+        [DataMember]
+        public string content { get; set; }
+        [DataMember]
+        public string url { get; set; }
     }
 
     [DataContract]
     public class RootObject
     {
+        [DataMember]
+        public int id { get; set; }
         [DataMember]
         public int page { get; set; }
         [DataMember]

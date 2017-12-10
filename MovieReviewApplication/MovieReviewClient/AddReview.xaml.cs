@@ -57,7 +57,7 @@ namespace MovieReviewClient
         private async void AppBarButton_Click_1(object sender, RoutedEventArgs e)
         {
             progressRing.IsActive = true;
-            var review = new Movie()
+            var review = new Review()
             {
                 name = name.Text,
                 movie_title = movie_title.Text,
