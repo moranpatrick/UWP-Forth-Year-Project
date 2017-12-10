@@ -68,7 +68,6 @@ namespace MovieReviewClient
                 HttpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
          
                 await client.PostAsync("http://moviereviewwebapp20171206123555.azurewebsites.net/api/Reviews", HttpContent);
-                //await client.PostAsync("http://localhost:52985/api/Reviews", HttpContent);
                 Frame.Navigate(typeof(ViewReviews));
             }
             catch

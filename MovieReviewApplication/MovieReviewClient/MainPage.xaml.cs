@@ -65,23 +65,29 @@ namespace MovieReviewClient
 
         public async void load_data(int id)
         {
+            Debug.WriteLine("HELLO");
             HttpClient client = new HttpClient();
+            var resources = new Windows.ApplicationModel.Resources.ResourceLoader("PrivateConfig");
+            var apiToken = resources.GetString("api_key");
+
             progressRing.IsActive = true;
-            string url = "https://api.themoviedb.org/3/movie/{0}?api_key=497239b3014ce173cabf9cdd23f6b120&language=en-US&page=1";
+
+            string url = null;
+
             if (id == 1)
             {
                 main_title.Text = "TOP-RATED MOVIES";
-                url = String.Format(url, "top_rated");
+                url = String.Format("https://api.themoviedb.org/3/movie/top_rated?api_key={0}&language=en-US&page=1", apiToken);
             }
             else if (id == 2)
             {
                 main_title.Text = "POPULAR";
-                url = String.Format(url, "popular");
+                url = String.Format("https://api.themoviedb.org/3/movie/popular?api_key={0}&language=en-US&page=1", apiToken);
             }
             else if (id == 3)
             {
                 main_title.Text = "UPCOMING";
-                url = String.Format(url, "upcoming");
+                url = String.Format("https://api.themoviedb.org/3/movie/upcoming?api_key={0}&language=en-US&page=1", apiToken);
             }
 
             try
@@ -146,9 +152,12 @@ namespace MovieReviewClient
         }
 
         private async void UserSearchQuery(String q)
-        {           
-            string url = String.Format("https://api.themoviedb.org/3/search/movie?api_key=497239b3014ce173cabf9cdd23f6b120&language=en-US&query={0}", q + "&page=1&include_adult=false");
-            
+        {
+            var resources = new Windows.ApplicationModel.Resources.ResourceLoader("PrivateConfig");
+            var apiToken = resources.GetString("api_key");
+
+            string url = String.Format("https://api.themoviedb.org/3/search/movie?api_key={0}&language=en-US&query={1}", apiToken, q + "&page=1&include_adult=false");
+            Debug.WriteLine("dsfd" + url);
             HttpClient client = new HttpClient();
             try
             {

@@ -40,15 +40,16 @@ namespace MovieReviewClient
             HttpClient client = new HttpClient();
 
             var review = e.Parameter as Result;
-    
+            var resources = new Windows.ApplicationModel.Resources.ResourceLoader("PrivateConfig");
+            var apiToken = resources.GetString("api_key");
+
+
             if (review != null)
             {
-                Debug.WriteLine(review.id);
-                string url = String.Format("https://api.themoviedb.org/3/movie/{0}/reviews?api_key=497239b3014ce173cabf9cdd23f6b120&language=en-US&page=1", review.id);
-                Debug.WriteLine(url);
+                string url = String.Format("https://api.themoviedb.org/3/movie/{0}/reviews?api_key={1}&language=en-US&page=1", review.id, apiToken);
+                Debug.WriteLine("here " + url);
                 try
                 {
-                    Debug.WriteLine("NOT NULL");
                     var response = await client.GetAsync(url);
                     var result = await response.Content.ReadAsStringAsync();
 
@@ -63,7 +64,6 @@ namespace MovieReviewClient
                         var actualResult = data.results;
 
                         apiReviewList.ItemsSource = actualResult;
-
                         review_title.Visibility = Visibility.Visible;
                         main_title.Visibility = Visibility.Collapsed;
                         reviewsList.Visibility = Visibility.Collapsed;
@@ -79,7 +79,6 @@ namespace MovieReviewClient
             }
             else
             {
-                Debug.WriteLine("IS NULL");
                 try
                 {
                     var JsonResponse = await client.GetStringAsync("http://moviereviewwebapp20171206123555.azurewebsites.net/api/Reviews");
