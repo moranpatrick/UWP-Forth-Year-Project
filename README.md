@@ -1,17 +1,20 @@
+<img align="right" src="https://www.yoyogames.com/system/blogs/featured_images/000/000/377/original/uwp-o.png?1459438884" width="200" height="80">     
 
-<p align="center">
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Windows_10_Logo.svg/2000px-Windows_10_Logo.svg.png" width="500" height=""><br />  
-<b style="font-size: 30px">UWP Forth Year Mobile Apps Project</b></p>  
+<br />  
+
+# UWP Forth Year Mobile Apps Project
 
 ## [Contents](#contents)      
 * [Project Overview](#overview)         
-* [Architecture](#architecture)             
-* [ASP.net Web App](#Webapp)    
-* [SQL Database](#database)    
-* [References](#References)    
+* [MVVM](#mvvm)             
+* [ASP.net App Service](#Webapp)   
+* [API Used](#api)     
+* [References](#References)     
 
 
 ## Project Overview<a name = "overview"></a>   
+My name is [Patrick Moran](https://www.linkedin.com/in/patrick-moran-7a349014b/) and this is my project repository for my Fourth Year Mobile Apps Module.
+
 Project Instructions:
 >Create a Windows 10 UWP App. The application should incorporate the following elements:
 * A responsive UI across the Windows 10 devices. There are some available for testing and
@@ -24,5 +27,54 @@ across devices.
 in C# to be able to interact with a UWP. The preferred cloud to use is Azure.
 * Use of the MVVM design pattern in the development approach.  
 
+####  My Project
+I've created a Movie Review UWP app, called Take 2.    
+Users can: 
+* Search or browse through movies and read reviews posted from users of [https://www.themoviedb.org/](https://www.themoviedb.org/).
+* Users can also create and store their own movie reviews. These reviews are shared between users of my app.  
+
+#### Application Screen Shots
+<img src="Screen.png" style="border: solid 3px" width="500" height="400" >  
+<img src="Screen2.png" style="border: solid 3px" width="500" height="400" > 
+
+[Top](#contents) 
+
+## MVVM<a name = "mvvm"></a> 
+My project implements MVVM. Here are the basics behind Model View View Model (MVVM).   
+* Model  
+The Model interacts with the system and data services. It should know nothing about the view, or how it is implemented.
+* View  
+The View is where the user experience is created. In UWP app we use xaml to achive this. 
+* View Model  
+The View Model is the link between the view and the model. The view model encapsulates code or data that your view will use. It is not responsible for any business logic. 
+
+The following diagram describes MVVM.  
+
+<img src="mvvm.png" width="500" height="300">  
+
+[Top](#contents) 
+
+## ASP. net App Service<a name = "Webapp"></a>
+![alt text](https://upload.wikimedia.org/wikipedia/commons/f/ff/Windows_Azure_logo.png) 
+In this application I created and hosted an Azure App Service along with an SQL database. Microsoft Azure is a cloud computing service used for building, testing, deploying and managing applications and services through a global network of Microsoft-managed data centers. Azure supports a range of operating systems, programming languages, frameworks, databases, and devices. More Information on Microsoft Azure can be found [here](https://azure.microsoft.com/en-us/overview/what-is-azure/). 
+
 [Top](#contents)  
+
+## API Used<a name = "api"></a> 
+The API I used in this application is [TMDB](https://www.themoviedb.org/). TMDB is a community built, movie and TV Database. All data has been added by its community of users. I found this service to be fantastic. The [API Documentation](https://developers.themoviedb.org/3/movies/get-top-rated-movies) is extensive and there is an excellent support section for developers. I would highly reccomend this API.
+
+[Top](#contents) 
+
+## References<a name = "References"></a>  
+#### Docs
+* [The Movie DB](https://developers.themoviedb.org/3/movies/get-top-rated-movies)
+* [UWP Docs](https://docs.microsoft.com/en-us/windows/uwp/)  
+* [Azure](https://docs.microsoft.com/en-us/azure/)
+
+#### Tutorials:  
+* https://www.youtube.com/watch?v=SiaUzO72tqE&list=PLi2hbezQRVS0cPMeW3uDlUHnO_rPvJCV9  
+* https://www.youtube.com/watch?v=PfnAqfgsvFc&list=LLglS-9dzs_PFia9xknMxtYQ&t=2180s&index=1  
+
+[Top](#contents) 
+
 
