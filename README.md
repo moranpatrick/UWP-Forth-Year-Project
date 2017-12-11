@@ -1,7 +1,4 @@
-<img align="right" src="https://www.yoyogames.com/system/blogs/featured_images/000/000/377/original/uwp-o.png?1459438884" width="200" height="80">     
-
-<br />  
-
+<img align="right" src="https://www.yoyogames.com/system/blogs/featured_images/000/000/377/original/uwp-o.png?1459438884" width="200">     
 # UWP Forth Year Mobile Apps Project
 
 ## [Contents](#contents)      
