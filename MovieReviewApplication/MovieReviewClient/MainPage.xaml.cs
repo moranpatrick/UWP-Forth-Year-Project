@@ -63,6 +63,7 @@ namespace MovieReviewClient
             }
         }
 
+        #region Main Load Data Function making api calls depending on combo box selection
         public async void load_data(int id)
         {
             Debug.WriteLine("HELLO");
@@ -73,7 +74,7 @@ namespace MovieReviewClient
             progressRing.IsActive = true;
 
             string url = null;
-
+            //Handle Selection
             if (id == 1)
             {
                 main_title.Text = "TOP-RATED MOVIES";
@@ -89,7 +90,7 @@ namespace MovieReviewClient
                 main_title.Text = "UPCOMING";
                 url = String.Format("https://api.themoviedb.org/3/movie/upcoming?api_key={0}&language=en-US&page=1", apiToken);
             }
-
+            //Make The Call to the API
             try
             {                    
                 var response = await client.GetAsync(url);
@@ -123,6 +124,7 @@ namespace MovieReviewClient
                 error.Text = "Error Retrieving Movies";
             }
         }
+        #endregion
 
         private void ListBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
@@ -130,19 +132,16 @@ namespace MovieReviewClient
             listMovies.Visibility = Visibility.Visible;
             listMovies.Visibility = Visibility.Visible;
             listMovies.Visibility = Visibility.Visible;
-
             search_results.Visibility = Visibility.Collapsed;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            //When main page is loaded the home listbox item will be shown
             Home.IsSelected = true;
             listMovies.Visibility = Visibility.Visible;
             search_results.Visibility = Visibility.Collapsed;
             main_title.Visibility = Visibility.Visible;
             search_title.Visibility = Visibility.Collapsed;
-
         }
 
         //Search Box Event Handler
@@ -157,7 +156,6 @@ namespace MovieReviewClient
             var apiToken = resources.GetString("api_key");
 
             string url = String.Format("https://api.themoviedb.org/3/search/movie?api_key={0}&language=en-US&query={1}", apiToken, q + "&page=1&include_adult=false");
-            Debug.WriteLine("dsfd" + url);
             HttpClient client = new HttpClient();
             try
             {
@@ -172,6 +170,7 @@ namespace MovieReviewClient
                 if (data.total_results == 0)
                 {
                     load_data(1);
+                    comboBox1.Visibility = Visibility.Collapsed;
                     MovieGrid.Visibility = Visibility.Visible;
                     error.Visibility = Visibility.Visible;              
                     error.Text = String.Format("No results here - Try Again!");
@@ -179,6 +178,7 @@ namespace MovieReviewClient
                 else if(actualresult == null)
                 {
                     load_data(1);
+                    comboBox1.Visibility = Visibility.Collapsed;
                     MovieGrid.Visibility = Visibility.Visible;
                     error.Visibility = Visibility.Visible;
                     error.Text = "No results - Try Again!";
@@ -196,20 +196,16 @@ namespace MovieReviewClient
                     listMovies.Visibility = Visibility.Collapsed;
                     listMovies.Visibility = Visibility.Collapsed;
                     listMovies.Visibility = Visibility.Collapsed;
-
                     main_title.Visibility = Visibility.Collapsed;
                     search_title.Visibility = Visibility.Visible;
-
                     search_results.Visibility = Visibility.Visible;
                 }
             }
             catch
             {
                 error.Visibility = Visibility.Visible;
-                error.Text = "Error with Search Query - Please Try again";
-                
-            }
-   
+                error.Text = "Error with Search Query - Please Try again";               
+            } 
         }
 
         private void MyAutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -222,6 +218,7 @@ namespace MovieReviewClient
                 }
                 else
                 {
+                    comboBox1.Visibility = Visibility.Visible;
                     search_results.Visibility = Visibility.Collapsed;
                     listMovies.Visibility = Visibility.Visible;
                     main_title.Visibility = Visibility.Visible;
@@ -253,7 +250,7 @@ namespace MovieReviewClient
 
         private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-         
+            // Handles Combo Box Selection
             if (((ComboBox)sender).SelectedValue.ToString() == "Top Rated")
             {               
                 load_data(1);
@@ -267,6 +264,5 @@ namespace MovieReviewClient
                 load_data(3);
             }
         }
-    }
-    
+    }   
 }

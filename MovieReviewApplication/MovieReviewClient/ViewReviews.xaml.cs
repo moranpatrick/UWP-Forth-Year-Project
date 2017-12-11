@@ -43,7 +43,6 @@ namespace MovieReviewClient
             var resources = new Windows.ApplicationModel.Resources.ResourceLoader("PrivateConfig");
             var apiToken = resources.GetString("api_key");
 
-
             if (review != null)
             {
                 string url = String.Format("https://api.themoviedb.org/3/movie/{0}/reviews?api_key={1}&language=en-US&page=1", review.id, apiToken);
@@ -70,7 +69,6 @@ namespace MovieReviewClient
                         apiReviewList.Visibility = Visibility.Visible;
                     }
                     progressRing.IsActive = false;
-
                 }
                 catch
                 {

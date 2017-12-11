@@ -41,16 +41,16 @@ namespace MovieReviewClient
             TitleTextBlock.Text = "Create Review";
         }
 
-        //view all button
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(ViewReviews));
         }
 
-        // Add Review
+        #region This Function Sends the created review to the azure database
         private async void AppBarButton_Click_1(object sender, RoutedEventArgs e)
         {
             progressRing.IsActive = true;
+            // Create Review Object
             var review = new Review()
             {
                 name = name.Text,
@@ -65,8 +65,7 @@ namespace MovieReviewClient
             var HttpContent = new StringContent(reviewJson);
             try { 
 
-                HttpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-         
+                HttpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");      
                 await client.PostAsync("http://moviereviewwebapp20171206123555.azurewebsites.net/api/Reviews", HttpContent);
                 Frame.Navigate(typeof(ViewReviews));
             }
@@ -75,9 +74,9 @@ namespace MovieReviewClient
                 progressRing.IsActive = false;
                 error.Visibility = Visibility.Visible;
                 error.Text = "Error Posting Review - Please Try Again!";
-            }
-         
+            }       
         }
+        #endregion
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
