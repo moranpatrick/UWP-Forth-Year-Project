@@ -34,8 +34,8 @@ Users can:
 * Users can also create and store their own movie reviews. These reviews are shared between users of my app.  
 
 #### Application Screen Shots
-<img src="Screen.png" style="border: solid 3px" width="500" height="400" >  
-<img src="Screen2.png" style="border: solid 3px" width="500" height="400" > 
+<img src="Screen.PNG" style="border: solid 3px" width="500" height="400" >  
+<img src="Screen2.PNG" style="border: solid 3px" width="500" height="400" > 
 
 [Top](#contents) 
 
