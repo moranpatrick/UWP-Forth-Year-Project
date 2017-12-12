@@ -1,6 +1,4 @@
-<img align="right" src="https://www.yoyogames.com/system/blogs/featured_images/000/000/377/original/uwp-o.png?1459438884" width="200" height="80">     
-
-<br />  
+<img src="https://www.yoyogames.com/system/blogs/featured_images/000/000/377/original/uwp-o.png?1459438884">     
 
 # UWP Forth Year Mobile Apps Project
 
@@ -36,8 +34,8 @@ Users can:
 * App users can also create and store their own movie reviews. These reviews are then shared between the users of my app.  
 
 #### Application Screen Shots
-<img src="Screen.png" style="border: solid 3px" width="500" height="400" >  
-<img src="Screen2.png" style="border: solid 3px" width="500" height="400" > 
+<img src="Screen.PNG" style="border: solid 3px" width="500" height="400" >  
+<img src="Screen2.PNG" style="border: solid 3px" width="500" height="400" > 
 
 [Top](#contents) 
 
