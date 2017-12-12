@@ -9,6 +9,7 @@
 * [MVVM](#mvvm)             
 * [ASP.net App Service](#Webapp)   
 * [API Used](#api)     
+* [Using this Repo](#instructions)
 * [References](#References)     
 
 
@@ -30,8 +31,9 @@ in C# to be able to interact with a UWP. The preferred cloud to use is Azure.
 ####  My Project
 I've created a Movie Review UWP app, called Take 2.    
 Users can: 
-* Search or browse through movies and read reviews posted from users of [https://www.themoviedb.org/](https://www.themoviedb.org/).
-* Users can also create and store their own movie reviews. These reviews are shared between users of my app.  
+* App users can browse for movies by the following categories; Top-Rated, Popular and Upcoming; Or Search the API for for a specific movie.
+* App users can then read reviews posted from the users of the [TMDB](https://www.themoviedb.org/) community.
+* App users can also create and store their own movie reviews. These reviews are then shared between the users of my app.  
 
 #### Application Screen Shots
 <img src="Screen.png" style="border: solid 3px" width="500" height="400" >  
@@ -56,7 +58,7 @@ The following diagram describes MVVM.
 
 ## ASP. net App Service<a name = "Webapp"></a>
 ![alt text](https://upload.wikimedia.org/wikipedia/commons/f/ff/Windows_Azure_logo.png) 
-In this application I created and hosted an Azure App Service along with an SQL database. Microsoft Azure is a cloud computing service used for building, testing, deploying and managing applications and services through a global network of Microsoft-managed data centers. Azure supports a range of operating systems, programming languages, frameworks, databases, and devices. More Information on Microsoft Azure can be found [here](https://azure.microsoft.com/en-us/overview/what-is-azure/). 
+In this application I created and hosted an Azure App Service along with an SQL database. Microsoft Azure is a cloud computing service used for building, testing, deploying and managing applications and services through a global network of Microsoft-managed data centers. Azure supports a range of operating systems, programming languages, frameworks, databases, and devices. More Information on Microsoft Azure can be found [ere](https://azure.microsoft.com/en-us/overview/what-is-azure/). 
 
 [Top](#contents)  
 
@@ -64,6 +66,17 @@ In this application I created and hosted an Azure App Service along with an SQL 
 The API I used in this application is [TMDB](https://www.themoviedb.org/). TMDB is a community built, movie and TV Database. All data has been added by its community of users. I found this service to be fantastic. The [API Documentation](https://developers.themoviedb.org/3/movies/get-top-rated-movies) is extensive and there is an excellent support section for developers. I would highly reccomend this API.
 
 [Top](#contents) 
+
+## Using this Repo<a name = "instructions"></a> 
+This UWP was developed using [Visual Studio 2015 Community Edition](https://www.visualstudio.com/downloads/) on Windows 10.  
+
+#### Minimum Requirements To Run
+* Minimum Version: Windows 10 (10.0; Build 10586)
+* Target Version: Windows 10 Anniversary Edition (10.0; Build 14393)
+
+Clone or download this repository and open it in Visual Studio.
+
+[Top](#contents)
 
 ## References<a name = "References"></a>  
 #### Docs
