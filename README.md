@@ -3,7 +3,8 @@
 # UWP Forth Year Mobile Apps Project
 
 ## [Contents](#contents)      
-* [Project Overview](#overview)         
+* [Project Overview](#overview)  
+* [Windows Store](#store)
 * [MVVM](#mvvm)             
 * [ASP.net App Service](#Webapp)   
 * [API Used](#api)     
@@ -36,6 +37,11 @@ Users can:
 #### Application Screen Shots
 <img src="Screen.PNG" style="border: solid 3px" width="500" height="400" >  
 <img src="Screen2.PNG" style="border: solid 3px" width="500" height="400" > 
+
+[Top](#contents) 
+
+## Windows Store<a name = "store"></a>
+This UWP application can now be downloaded from the windows store. To download or just view the app in the Windows Store click [here](https://www.microsoft.com/en-ie/store/p/take-2/9p9wk0hbdg1b).
 
 [Top](#contents) 
 
